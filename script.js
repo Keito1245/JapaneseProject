@@ -15,7 +15,9 @@ fetch('data/vocab.json')
     showWord();
 
     // Set up event listener for check button
-    document.getElementById('checkBtn').addEventListener('click', checkAnswer);
+    document.getElementById('submit').addEventListener('click', checkAnswer);
+    
+    
   })
   .catch(error => {
     console.error("Failed to load vocabulary:", error);
@@ -24,16 +26,16 @@ fetch('data/vocab.json')
 // Function to display the current Japanese word
 function showWord() {
   if (vocabList.length > 0) {
-    document.getElementById('wordDisplay').innerText = vocabList[currentIndex].jp;
+    document.getElementById('question').innerText = vocabList[currentIndex].jp;
   }
 }
 
 // Function to check the answer
 function checkAnswer() {
-  const userAnswer = document.getElementById('answerInput').value.trim().toLowerCase();
+  const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
   const correctAnswer = vocabList[currentIndex].en.trim().toLowerCase();
 
-  const resultEl = document.getElementById('result');
+  const resultEl = document.getElementById('feedback');
   if (userAnswer === correctAnswer) {
     resultEl.innerText = "✅ Correct!";
     resultEl.style.color = "green";
@@ -42,7 +44,11 @@ function checkAnswer() {
     resultEl.style.color = "red";
   }
 
-  // Clear input for next attempt
-  document.getElementById('answerInput').value = "";
+  setTimeout(() => {
+    document.getElementById('answer').value = "";
+    resultEl.innerText = ""; // clear feedback
+    currentIndex = (currentIndex + 1) % vocabList.length;
+    showWord();
+  }, 1000);
 }
 
