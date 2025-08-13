@@ -1,7 +1,13 @@
 let vocabList = [];
 let currentIndex = 0;
 
-// Load vocabulary
+const nextBtn = document.getElementById('nextBtn');
+const answerInput = document.getElementById('answer');
+const submitBtn = document.getElementById('submit');
+const feedback = document.getElementById('feedback');
+const questionEl = document.getElementById('question');
+
+// --- Load vocabulary from JSON ---
 fetch('data/vocab.json')
   .then(response => {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -10,45 +16,57 @@ fetch('data/vocab.json')
   .then(data => {
     vocabList = data;
     console.log("Vocabulary loaded:", vocabList);
-
-    // Show first word
     showWord();
-
-    // Set up event listener for check button
-    document.getElementById('submit').addEventListener('click', checkAnswer);
-    
-    
   })
   .catch(error => {
     console.error("Failed to load vocabulary:", error);
   });
+  nextBtn.style.display = 'none'; // Hide the next button at the start
 
-// Function to display the current Japanese word
+// --- Display the current Japanese word ---
 function showWord() {
   if (vocabList.length > 0) {
-    document.getElementById('question').innerText = vocabList[currentIndex].jp;
+    questionEl.innerText = vocabList[currentIndex].jp;
   }
 }
 
-// Function to check the answer
+// --- Check the user's answer ---
 function checkAnswer() {
-  const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
+  const userAnswer = answerInput.value.trim().toLowerCase();
   const correctAnswer = vocabList[currentIndex].en.trim().toLowerCase();
 
-  const resultEl = document.getElementById('feedback');
   if (userAnswer === correctAnswer) {
-    resultEl.innerText = "✅ Correct!";
-    resultEl.style.color = "green";
+    feedback.innerText = "✅ Correct!";
+    feedback.style.color = "green";
   } else {
-    resultEl.innerText = `❌ Incorrect. Correct answer: ${vocabList[currentIndex].en}`;
-    resultEl.style.color = "red";
+    feedback.innerText = `❌ Incorrect. Correct answer: ${vocabList[currentIndex].en}`;
+    feedback.style.color = "red";
   }
 
-  setTimeout(() => {
-    document.getElementById('answer').value = "";
-    resultEl.innerText = ""; // clear feedback
-    currentIndex = (currentIndex + 1) % vocabList.length;
-    showWord();
-  }, 1000);
+  // Show "Next" button immediately after checking
+  nextBtn.style.display = 'inline-block';
 }
 
+// --- Move to the next question ---
+function nextQuestion() {
+  currentIndex = (currentIndex + 1) % vocabList.length;
+  feedback.innerText = "";
+  answerInput.value = "";
+  showWord();
+  nextBtn.style.display = 'none';
+  answerInput.focus();
+}
+
+// --- Event listeners ---
+submitBtn.addEventListener('click', checkAnswer);
+nextBtn.addEventListener('click', nextQuestion);
+
+answerInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    if(nextBtn.style.display == 'none'){
+        checkAnswer();
+    }else{
+        nextQuestion();
+    }
+  }
+});
