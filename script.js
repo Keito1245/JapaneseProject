@@ -1,5 +1,8 @@
 let vocabList = [];
 let currentIndex = 0;
+let score = 0;   // keeps track of correct answers
+let grade = "all"; // current grade level (default to all)
+
 
 const nextBtn = document.getElementById('nextBtn');
 const answerInput = document.getElementById('answer');
@@ -34,15 +37,23 @@ function showWord() {
 function checkAnswer() {
   const userAnswer = answerInput.value.trim().toLowerCase();
   const correctAnswer = vocabList[currentIndex].en.trim().toLowerCase();
+  const value = answerInput.value.trim();
+  if (value === ""){
+    return; // do nothing on empty input
+  }  
+
 
   if (userAnswer === correctAnswer) {
     feedback.innerText = "✅ Correct!";
     feedback.style.color = "green";
+    score++;
   } else {
     feedback.innerText = `❌ Incorrect. Correct answer: ${vocabList[currentIndex].en}`;
     feedback.style.color = "red";
+    score=0;
   }
 
+  document.getElementById("score").textContent = `Score: ${score}`;
   // Show "Next" button immediately after checking
   nextBtn.style.display = 'inline-block';
 }

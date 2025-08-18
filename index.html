@@ -32,16 +32,40 @@
     #nextBtn {
       display: none;
     }
+    #score {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    #gradeSelect {
+      margin-top: 15px;
+    }
   </style>
 </head>
 <body>
   <h1>Japanese Vocabulary Quiz</h1>
+
+  <!-- Grade selection -->
+  <div id="gradeSelect">
+    <label for="grade">Choose Grade Level:</label>
+    <select id="grade" onchange="setGrade(this.value)">
+      <option value="all">All</option>
+      <option value="n5">JLPT N5</option>
+      <option value="n4">JLPT N4</option>
+      <option value="n3">JLPT N3</option>
+      <!-- add more levels later if needed -->
+    </select>
+  </div>
+
   <div id="question">Loading...</div>
   <input type="text" id="answer" placeholder="Enter English meaning">
   <br>
   <button id="submit">Check</button>
   <button id="nextBtn">Next</button>
   <div id="feedback"></div>
+
+  <!-- Score display -->
+  <div id="score">Score: 0</div>
 
   <script src="script.js"></script>
 </body>
