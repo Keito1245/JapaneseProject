@@ -1,8 +1,14 @@
-[
-    { "jp": "ねこ", "en": "cat" },
-    { "jp": "いぬ", "en": "dog" },
-    { "jp": "みず", "en": "water" },
-    { "jp": "そら", "en": "sky"},
-    { "jp": "わにゃ" , "en": "puppi"}
+{
+  "grade1": [
+    { "jp": "猫", "en": "cat" },
+    { "jp": "犬", "en": "dog" }
+  ],
+  "grade2": [
+    { "jp": "学校", "en": "school" },
+    { "jp": "先生", "en": "teacher" }
+  ],
+  "grade3": [
+    { "jp": "勉強", "en": "study" },
+    { "jp": "試験", "en": "exam" }
   ]
-  
+}

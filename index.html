@@ -46,16 +46,14 @@
   <h1>Japanese Vocabulary Quiz</h1>
 
   <!-- Grade selection -->
-  <div id="gradeSelect">
-    <label for="grade">Choose Grade Level:</label>
-    <select id="grade" onchange="setGrade(this.value)">
-      <option value="all">All</option>
-      <option value="n5">JLPT N5</option>
-      <option value="n4">JLPT N4</option>
-      <option value="n3">JLPT N3</option>
-      <!-- add more levels later if needed -->
-    </select>
-  </div>
+<div id="gradeContainer">
+  <label for="gradeSelect">Select Grade:</label>
+  <select id="gradeSelect" onchange="loadGrade()">
+    <option value="grade1">Grade 1</option>
+    <option value="grade2">Grade 2</option>
+    <option value="grade3">Grade 3</option>
+  </select>
+</div>
 
   <div id="question">Loading...</div>
   <input type="text" id="answer" placeholder="Enter English meaning">
